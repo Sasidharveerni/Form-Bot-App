@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Flow.css';
 
 import LightTheme from './themes/LightTheme.png';
