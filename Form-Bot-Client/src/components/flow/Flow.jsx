@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router';
 import { isValidGifUrl, isValidImageUrl, isValidVideoUrl } from './validation';
 import { deleteIcon } from './Svg';
 
-function Flow({userData}) {
+function Flow({userData, selectTheme, setSelectTheme}) {
 
     const navigate = useNavigate();
 
@@ -28,6 +28,8 @@ function Flow({userData}) {
         theme: false,
         response: false
     });
+
+    
 
     const getFormId = localStorage.getItem('formId') || ''
 
@@ -90,6 +92,7 @@ function Flow({userData}) {
                     return;
                 }
             }
+            console.log(selectTheme)
 
             if(finalFlow.length !== 0) {
                 const response = await axios.put(`https://form-bot-server-1.onrender.com/update-flow/${getFormId}`, {
@@ -130,7 +133,7 @@ function Flow({userData}) {
                     return;
                 }
             }
-
+            
             if(finalFlow.length !== 0) {
 
                 const response = await axios.post('https://form-bot-server-1.onrender.com/create-flow', {
@@ -334,7 +337,7 @@ function Flow({userData}) {
             </div>}
 
 
-            {redirect.theme && <Theme />}
+            {redirect.theme && <Theme selectTheme={selectTheme} setSelectTheme={setSelectTheme}/>}
 
             {redirect.response && <Response />}
         </div>

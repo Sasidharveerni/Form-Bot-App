@@ -22,6 +22,12 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState(null);
 
+  const [selectTheme, setSelectTheme] = useState({
+    light: false,
+    dark: true,
+    tailBlue: false
+})
+
   const checkUserLoginStatus = async () => {
     try {
       console.log(email)
@@ -62,8 +68,8 @@ function App() {
           <Route path='/login' element={<Login setUserData={setUserData}/>} />
           <Route path='/signup' element={<Register />} />
           <Route path='/workspace' element={<WorkSpace userData={userData} setIsLogin={setIsLogin}/>} />
-          <Route path='/start-flow' element={<Flow userData={userData}/>} />
-          <Route path='/form-bot' element={<FormBot />} />
+          <Route path='/start-flow' element={<Flow userData={userData} selectTheme={selectTheme} setSelectTheme={setSelectTheme}/>} />
+          <Route path='/form-bot' element={<FormBot selectTheme={selectTheme}/>} />
           <Route path='/settings' element={<Settings />} />
         </Routes>
       </BrowserRouter>

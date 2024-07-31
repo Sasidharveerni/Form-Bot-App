@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FormBotLogo from '../components/flow/themes/image 4.png';
 import axios from 'axios';
 
-function FormBot() {
+function FormBot({selectTheme}) {
 
   const flowId = localStorage.getItem('formId');
   console.log(flowId)
@@ -174,7 +174,7 @@ function FormBot() {
   const currentStep = flowData ? flowData[currentStepIndex] : null;
 
   return (
-    <div>
+    <div style={{backgroundColor: selectTheme.tailBlue ? '#508C9B' : selectTheme.light ? '#fff' : '', height: '100vh'}}>
       {displayedSteps.map((step, index) => (
         <div key={index} className='formbot-response'>
           {step.stepType === 'bot' ? renderBotMessage(step) : (

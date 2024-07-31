@@ -7,12 +7,8 @@ import TailBlueTheme from './themes/TailBlueTheme.png';
 
 import FormBotLogo from './themes/image 4.png';
 
-function Theme() {
-    const [selectTheme, setSelectTheme] = useState({
-        light: false,
-        dark: true,
-        tailBlue: false
-    })
+function Theme({selectTheme, setSelectTheme}) {
+    
     return (
         <div
             className='theme-header'
