@@ -5,7 +5,7 @@ import axios from 'axios';
 import showToasts from '../../pages/Toast';
 import { deleteIcon, createIcon, createFlowIcon } from '../flow/Svg';
 
-function WorkSpace({ userData }) {
+function WorkSpace({ userData, setIsLogin }) {
     const navigate = useNavigate();
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -61,6 +61,7 @@ function WorkSpace({ userData }) {
     const logout = () => {
         localStorage.removeItem('formBotEmail');
         localStorage.removeItem('formBotToken');
+        setIsLogin(false)
         showToasts('Logged out successfully', 'success');
         navigate('/');
     };

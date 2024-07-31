@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import showToasts from './Toast';
 
-function Login() {
+function Login({setUserData}) {
   const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState({
@@ -33,6 +33,7 @@ function Login() {
       });
       if (response.data.status === 'Success') {
         console.log(response.data);
+        setUserData(response.data.user)
         showToasts(response.data.message, 'success');
         localStorage.setItem('formBotEmail', loginData.email);
         localStorage.setItem('formBotToken', response.data.token);
