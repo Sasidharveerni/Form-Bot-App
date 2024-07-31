@@ -60,7 +60,7 @@ function Flow({userData}) {
 
     const getFormData = async () => {
         try {
-           const response = await axios.get(`http://localhost:5000/get-flow/${getFormId}`);
+           const response = await axios.get(`https://form-bot-server-1.onrender.com/get-flow/${getFormId}`);
            if(response.data.status === 'Success') {
              console.log(response.data.data)
              setFormName(response.data.data.name);
@@ -92,7 +92,7 @@ function Flow({userData}) {
             }
 
             if(finalFlow.length !== 0) {
-                const response = await axios.put(`http://localhost:5000/update-flow/${getFormId}`, {
+                const response = await axios.put(`https://form-bot-server-1.onrender.com/update-flow/${getFormId}`, {
                     name: formName,
                     steps: finalFlow.filter(step => step.stepType !== 'svg') // Remove svgs before sending
                 });
@@ -133,7 +133,7 @@ function Flow({userData}) {
 
             if(finalFlow.length !== 0) {
 
-                const response = await axios.post('http://localhost:5000/create-flow', {
+                const response = await axios.post('https://form-bot-server-1.onrender.com/create-flow', {
                     name: formName,
                     steps: finalFlow.filter(step => step.stepType !== 'svg'), // Remove svgs before sending
                     creatorId: userData._id,

@@ -14,7 +14,7 @@ function Settings({userData, token}) {
 
     const updateDetails = async () => {
         try {
-            const response = await axios.patch(`http://localhost:5000/update/${userData._id}`, details, {
+            const response = await axios.patch(`https://form-bot-server-1.onrender.com/update/${userData._id}`, details, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

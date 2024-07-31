@@ -17,7 +17,7 @@ function FormBot() {
   useEffect(() => {
     const getFormId = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/get-flow/${flowId}`);
+        const response = await axios.get(`https://form-bot-server-1.onrender.com/get-flow/${flowId}`);
         if (response.data.status === 'Success') {
           setFlowData(response.data.data.steps);
         }
@@ -54,7 +54,7 @@ function FormBot() {
       setButtons(true);
 
       // Update the human response value in the backend
-      const response = await axios.post(`http://localhost:5000/post-response/${flowId}`, {
+      const response = await axios.post(`https://form-bot-server-1.onrender.com/post-response/${flowId}`, {
         updatedSteps: flowData.map((step, index) =>
           index === currentStepIndex && step.stepType === 'human' ? { ...step, value: userInput } : step
         )

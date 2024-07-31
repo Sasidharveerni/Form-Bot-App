@@ -12,7 +12,7 @@ function Response({ flowId }) {
     // Fetch human responses when flowId changes
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/get-flow/${flowId}`);
+        const response = await axios.get(`https://form-bot-server-1.onrender.com/get-flow/${flowId}`);
         if (response.data.status === 'Success') {
           setHumanResponses(response.data.humanResponses);
         }

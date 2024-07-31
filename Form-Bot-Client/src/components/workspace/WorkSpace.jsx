@@ -46,7 +46,7 @@ function WorkSpace({ userData }) {
 
     const deleteFolder = async () => {
         try {
-            const response = await axios.delete(`http://localhost:5000/delete-folder/${folderToDelete._id}`);
+            const response = await axios.delete(`https://form-bot-server-1.onrender.com/delete-folder/${folderToDelete._id}`);
             if (response.data.status === 'Success') {
                 setFolders(folders.filter(folder => folder.id !== folderToDelete.id));
                 showToasts(response.data.message, 'success');
@@ -67,7 +67,7 @@ function WorkSpace({ userData }) {
 
     const getFolders = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/get-folders/${userData._id}`);
+            const response = await axios.get(`https://form-bot-server-1.onrender.com/get-folders/${userData._id}`);
             if (response.data.status === 'Success') {
                 setFolders(response.data.data);
             }
@@ -85,7 +85,7 @@ function WorkSpace({ userData }) {
 
     const createFolder = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/create-folder', {
+            const response = await axios.post('https://form-bot-server-1.onrender.com/create-folder', {
                 name: newFolderName.trim(),
                 creatorId: userData._id,
             });
@@ -112,7 +112,7 @@ function WorkSpace({ userData }) {
 
     const deleteFlow = async (getFormId) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/delete-flow/${getFormId}`);
+            const response = await axios.delete(`https://form-bot-server-1.onrender.com/delete-flow/${getFormId}`);
             if (response.data.status === 'Success') {
                 showToasts('Flow deleted successfully', 'success');
                 //here update forms in setFolders

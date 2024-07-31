@@ -26,7 +26,7 @@ function App() {
     try {
       console.log(email)
       if (email !== '' && token !== '') {
-        const response = await axios.post('http://localhost:5000/login/status', {email} , {
+        const response = await axios.post('https://form-bot-server-1.onrender.com/login/status', {email} , {
           headers: {
             Authorization: `Bearer ${token}`
           }

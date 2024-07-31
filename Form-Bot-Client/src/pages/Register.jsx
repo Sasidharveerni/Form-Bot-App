@@ -57,7 +57,7 @@ function Register() {
         } else {
             try {
             
-                const response = await axios.post('http://localhost:5000/register', {
+                const response = await axios.post('https://form-bot-server-1.onrender.com/register', {
                     username: formData.name,
                     email: formData.email,
                     password: formData.password
