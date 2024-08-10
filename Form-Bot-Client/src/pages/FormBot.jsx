@@ -39,6 +39,10 @@ function FormBot({selectTheme}) {
     setUserInput(event.target.value);
   };
 
+  const handleSubmitRating = (ele) => {
+    setUserInput(ele)
+  }
+
   const sendRating = (userInput, id) => {
     userInput = id;
     return userInput;
@@ -63,6 +67,7 @@ function FormBot({selectTheme}) {
       // If the update is successful, proceed to update the displayed steps
       if (response.data.status === 'Success') {
         // Add current human step to displayed steps
+        console.log(userInput)
         setDisplayedSteps(prev => [...prev, { ...flowData[currentStepIndex], value: userInput }]);
 
         // Move to the next step
@@ -155,7 +160,7 @@ function FormBot({selectTheme}) {
       <div className='input-bar'>
         <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center', textAlign: 'center'}}>
           {ratings.map((ele, ind) => (
-            <p style={{borderRadius: '50%',  backgroundColor: '#1A5FFF', width: '2vw', height: '4vh', color: 'white', cursor: 'pointer'}} key={ind} onClick={() => sendRating(userInput, ele)}>{ele}</p>
+            <p style={{borderRadius: '50%',  backgroundColor: '#1A5FFF', width: '2vw', height: '4vh', color: 'white', cursor: 'pointer'}} key={ind} onClick={() => {sendRating(userInput, ele); handleSubmitRating(ele)}}>{ele}</p>
           ))}
         </div>
       </div>}

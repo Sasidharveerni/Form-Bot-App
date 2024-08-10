@@ -134,16 +134,17 @@ function Flow({userData, selectTheme, setSelectTheme}) {
                 }
             }
             
-            if(finalFlow.length !== 0) {
-
+            if(finalFlow.length !== 0) { 
+                
                 const response = await axios.post('https://form-bot-server-1.onrender.com/create-flow', {
                     name: formName,
                     steps: finalFlow.filter(step => step.stepType !== 'svg'), // Remove svgs before sending
-                    creatorId: userData._id,
+                    creator: userData._id,
                     folderId: localStorage.getItem('folderId') || ''
                 });
         
                 if (response.data.status === 'Success') {
+                    
                     showToasts('Form saved successfully', 'success');
                     setEnableShare(true);
                     setRedirect({ ...redirect, flow: false, theme: true, response: false });

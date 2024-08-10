@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import './WorkSpace.css';
 import { useNavigate } from 'react-router';
@@ -14,14 +15,16 @@ function WorkSpace({ userData, setIsLogin }) {
     const [folders, setFolders] = useState([]);
     const [folderToDelete, setFolderToDelete] = useState(null);
     const [selectedFolder, setSelectedFolder] = useState(null);
+    const [independentFlows, setIndependentFlows] = useState([])
 
     useEffect(() => {
         if (userData) {
             getFolders();
+            getIndependentFlows(userData._id);
         }
     }, [userData]);
 
-    console.log(folders);
+    // console.log(folders);
 
     const toggleDropdown = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -116,19 +119,27 @@ function WorkSpace({ userData, setIsLogin }) {
             const response = await axios.delete(`https://form-bot-server-1.onrender.com/delete-flow/${getFormId}`);
             if (response.data.status === 'Success') {
                 showToasts('Flow deleted successfully', 'success');
-                //here update forms in setFolders
-
-                setFolders(prevFolders => {
-                    return prevFolders.map(folder => {
-                        if (folder._id === selectedFolder._id) {
-                            return {
-                                ...folder,
-                                forms: folder.forms.filter(form => form._id !== getFormId)
-                            };
-                        }
-                        return folder;
+                
+                // Update forms in setFolders if a folder is selected
+                if (selectedFolder) {
+                    setFolders(prevFolders => {
+                        return prevFolders.map(folder => {
+                            if (folder._id === selectedFolder._id) {
+                                return {
+                                    ...folder,
+                                    forms: folder.forms.filter(form => form._id !== getFormId)
+                                };
+                            }
+                            return folder;
+                        });
                     });
-                });
+                } else {
+                    // Update independent flows
+                    setIndependentFlows(prevFlows => {
+                        return prevFlows.filter(flow => flow._id !== getFormId);
+                    });
+                }
+    
             } else {
                 showToasts(response.data.message, 'error');
                 console.log('Error in deleting flow');
@@ -137,6 +148,19 @@ function WorkSpace({ userData, setIsLogin }) {
             console.log('Error in deleting flow', error);
         }
     };
+    
+
+    const getIndependentFlows = async (creatorId) => {
+        try {
+            const response = await axios.get(`http://localhost:5000/get-independent-flow/${creatorId}`);
+            console.log(response.data)
+            if (response.data.status === 'Success') {
+                setIndependentFlows(response.data.formNames);
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     if (!userData) {
         return (
@@ -146,6 +170,8 @@ function WorkSpace({ userData, setIsLogin }) {
             </div>
         );
     }
+
+    console.log(independentFlows)
 
     return (
         <>
@@ -250,6 +276,22 @@ function WorkSpace({ userData, setIsLogin }) {
                         </div>
                     </div>
                 ))}
+
+                {independentFlows.map((ele, ind) => (
+                    <div key={ind} className='create-typebot' style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}>
+                        <div className='position-delete' onClick={(e) => {
+                            e.stopPropagation();
+                            console.log(ele._id);
+                            deleteFlow(ele._id)
+                        }}>
+                            {deleteIcon}
+                        </div>
+                        <div>
+                            {ele.name} {/* This will display the name directly */}
+                        </div>
+                    </div>
+                ))}
+
             </div>
         </>
     );

@@ -26,7 +26,8 @@ const conversationFlowSchema = new mongoose.Schema({
   sharedWith: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   humanResponses: [humanResponseSchema],
   createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now }
+  updatedAt: { type: Date, default: Date.now },
+  folderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Folder' } // Adjust folderId to be an ObjectId reference
 });
 
 module.exports = mongoose.model('ConversationFlow', conversationFlowSchema);

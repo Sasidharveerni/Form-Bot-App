@@ -70,7 +70,7 @@ function App() {
           <Route path='/workspace' element={<WorkSpace userData={userData} setIsLogin={setIsLogin}/>} />
           <Route path='/start-flow' element={<Flow userData={userData} selectTheme={selectTheme} setSelectTheme={setSelectTheme}/>} />
           <Route path='/form-bot' element={<FormBot selectTheme={selectTheme}/>} />
-          <Route path='/settings' element={<Settings />} />
+          <Route path='/settings' element={<Settings userData={userData} token={token}/>} />
         </Routes>
       </BrowserRouter>
     </>

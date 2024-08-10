@@ -29,21 +29,29 @@ router.get('/get-flow', async (req, res) => {
 });
 
 
-router.get('/get-flow/:flowId', async (req, res) => {
+
+
+router.get('/get-independent-flow/:creatorId', async (req, res) => {
   try {
-    const {flowId} = req.params;
-    const flowData = await ConversationFlow.findById(flowId);
+    const {creatorId} = req.params;
+    const flowData = await ConversationFlow.find({creator: creatorId });
     if (!flowData) {
       return res.status(400).json({
         status: 'Failed',
         message: 'Uh-Oh, there is no data. Create a form first.'
       });
     } else {
-      return res.status(200).json({
-        status: 'Success',
-        data: flowData
-      });
+
+      if(!flowData.folderId) {
+        return res.status(200).json({
+          status: 'Success',
+          message: 'Independent Flow',
+          formNames: flowData,
+         length: flowData.length
+        });
+      }
     }
+    
   } catch (error) {
     res.status(500).json({
       status: 'Failed',
@@ -51,6 +59,7 @@ router.get('/get-flow/:flowId', async (req, res) => {
     });
   }
 });
+
 
 router.delete('/delete-folder/:folderId', async (req, res) => {
   try {
@@ -142,7 +151,8 @@ router.post('/create-flow', async (req, res) => {
     const newFlow = new ConversationFlow({
       name,
       steps: parsedSteps,
-      creator: creatorId
+      creator: creatorId,
+      folderId: folderId || null // Ensure folderId is set to null if not provided
     });
 
     const savedFlow = await newFlow.save();
@@ -160,6 +170,7 @@ router.post('/create-flow', async (req, res) => {
     res.status(500).json({status: 'Failed', message: 'Error creating flow', error: error.message });
   }
 });
+
 
 // Update a flow
 router.put('/update-flow/:flowId', async (req, res) => {
