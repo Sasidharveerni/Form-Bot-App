@@ -139,12 +139,12 @@ function Flow({userData, selectTheme, setSelectTheme}) {
                 const response = await axios.post('https://form-bot-server-1.onrender.com/create-flow', {
                     name: formName,
                     steps: finalFlow.filter(step => step.stepType !== 'svg'), // Remove svgs before sending
-                    creator: userData._id,
+                    creatorId: userData._id,
                     folderId: localStorage.getItem('folderId') || ''
                 });
         
                 if (response.data.status === 'Success') {
-                    
+                    console.log(response.data)
                     showToasts('Form saved successfully', 'success');
                     setEnableShare(true);
                     setRedirect({ ...redirect, flow: false, theme: true, response: false });

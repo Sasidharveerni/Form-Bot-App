@@ -152,7 +152,7 @@ function WorkSpace({ userData, setIsLogin }) {
 
     const getIndependentFlows = async (creatorId) => {
         try {
-            const response = await axios.get(`http://localhost:5000/get-independent-flow/${creatorId}`);
+            const response = await axios.get(`https://form-bot-server-1.onrender.com/get-independent-flow/${creatorId}`);
             console.log(response.data)
             if (response.data.status === 'Success') {
                 setIndependentFlows(response.data.formNames);
@@ -278,7 +278,7 @@ function WorkSpace({ userData, setIsLogin }) {
                 ))}
 
                 {independentFlows.map((ele, ind) => (
-                    <div key={ind} className='create-typebot' style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}>
+                    <div key={ind} className='create-typebot' onClick={() => navigateForm(ele)} style={{ backgroundColor: 'rgba(255, 255, 255, 0.50)' }}>
                         <div className='position-delete' onClick={(e) => {
                             e.stopPropagation();
                             console.log(ele._id);
