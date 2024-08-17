@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router';
 import { isValidGifUrl, isValidImageUrl, isValidVideoUrl } from './validation';
 import { deleteIcon } from './Svg';
 
-function Flow({userData, selectTheme, setSelectTheme}) {
+function Flow({userData, selectTheme, setSelectTheme, flowId, setFlowId}) {
 
     const navigate = useNavigate();
 
@@ -28,6 +28,21 @@ function Flow({userData, selectTheme, setSelectTheme}) {
         theme: false,
         response: false
     });
+
+    const [copied, setCopied] = useState(false);
+
+    const copyToClipboard = (link) => {
+        navigator.clipboard.writeText(link)
+            .then(() => {
+                setCopied(true);
+                setTimeout(() => {
+                    setCopied(false);
+                }, 2000); // Hide the message after 2 seconds
+            })
+            .catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+    };
 
     
 
@@ -55,6 +70,7 @@ function Flow({userData, selectTheme, setSelectTheme}) {
 
     useEffect(() => {
         if(getFormId) {
+            setFlowId(getFormId)
             setEnableShare(true);
             getFormData();
         }
@@ -195,11 +211,15 @@ function Flow({userData, selectTheme, setSelectTheme}) {
         )
     }
 
+    
+
     const redirectToBot = () => {
         if(enableShare && finalFlow.length > 0) {
-            navigate('/form-bot')
+            copyToClipboard(`http://localhost:3000/form-bot/${flowId}`);
+            navigate(`/form-bot/${flowId}`);
         }
     }
+    
 
 
     if (!userData) {
@@ -254,6 +274,18 @@ function Flow({userData, selectTheme, setSelectTheme}) {
                     </div>
                 </div>
             </div>
+
+            {copied && 
+            
+            <div>
+                <div>
+
+                </div>
+
+                <div>
+                    Link Copied
+                </div>
+            </div>}
 
             {redirect.flow && <div style={{ backgroundColor: '#1F1F23', height: '100vh', display: 'flex'}}>
                 <div className='workspace-sidebar'>

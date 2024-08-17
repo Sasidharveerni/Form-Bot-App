@@ -21,6 +21,7 @@ function App() {
 
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [flowId, setFlowId] = useState('');
 
   const [selectTheme, setSelectTheme] = useState({
     light: false,
@@ -68,8 +69,8 @@ function App() {
           <Route path='/login' element={<Login setUserData={setUserData}/>} />
           <Route path='/signup' element={<Register />} />
           <Route path='/workspace' element={<WorkSpace userData={userData} setIsLogin={setIsLogin}/>} />
-          <Route path='/start-flow' element={<Flow userData={userData} selectTheme={selectTheme} setSelectTheme={setSelectTheme}/>} />
-          <Route path='/form-bot' element={<FormBot selectTheme={selectTheme}/>} />
+          <Route path='/start-flow' element={<Flow userData={userData} selectTheme={selectTheme} setSelectTheme={setSelectTheme} flowId={flowId} setFlowId={setFlowId}/>} />
+          <Route path='/form-bot/:flowId' element={<FormBot selectTheme={selectTheme}/>} />
           <Route path='/settings' element={<Settings userData={userData} token={token}/>} />
         </Routes>
       </BrowserRouter>

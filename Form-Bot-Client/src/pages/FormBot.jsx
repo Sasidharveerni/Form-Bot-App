@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import FormBotLogo from '../components/flow/themes/image 4.png';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
 
 function FormBot({selectTheme}) {
-
-  const flowId = localStorage.getItem('formId');
+  const { flowId } = useParams();
   console.log(flowId)
   const [flowData, setFlowData] = useState(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
